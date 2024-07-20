@@ -1,0 +1,24 @@
+{
+  "name": "store-api",
+  "version": "1.0.0",
+  "description": "Teste Técnico BeTalent",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/othonoliveira/Store-API.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/othonoliveira/Store-API/issues"
+  },
+  "homepage": "https://github.com/othonoliveira/Store-API#readme",
+  "dependencies": {
+    "adonis-framework": "^3.0.14",
+    "mysql2": "^3.10.3",
+    "sequelize": "^6.37.3"
+  }
+}
