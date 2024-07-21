@@ -7,8 +7,8 @@ export default class AuthController {
     const { email, senha } = await request.validateUsing(loginValidator)
 
     const user = await Usuario.findBy('email', email)
-    if (!user) {
-      response.abort('Invalid credentials')
+    if (user === null || senha !== user.senha) {
+      return response.abort('Invalid credentials')
     }
     const token = await Usuario.accessTokens.create(user)
 
@@ -17,11 +17,24 @@ export default class AuthController {
       ...user.serialize(),
     })
   }
-  async register({ request, response }: HttpContext) {
+
+  async register({ request }: HttpContext) {
     const payload = await request.validateUsing(registerValidator)
 
     const user = await Usuario.create(payload)
 
-    return response.created(user)
+    return Usuario.accessTokens.create(user)
+  }
+
+  async logout({ auth }: HttpContext) {
+    const user = auth.user!
+    await Usuario.accessTokens.delete(user, user.currentAccessToken.identifier)
+    return { message: 'Loged out' }
+  }
+
+  async me({ auth }: HttpContext) {
+    await auth.check()
+
+    return { user: auth.user }
   }
 }
